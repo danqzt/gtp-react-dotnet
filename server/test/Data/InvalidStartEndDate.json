@@ -1,0 +1,16 @@
+{
+    "Id" : 1,
+    "FirstName" : "Daniel",
+    "MiddleName" : "Budi",
+    "LastName" : "Laksana",
+    "Email" : "email@gmail.com",
+    "Mobile" : 465493635,
+    "Address": "2/9 Little St, Ashfield, NSW",
+    "ContractType": "permanent",
+    "StartDate": "2021-09-21",
+    "EndDate": "2020-09-04",
+    "OnGoing": true,
+    "EmployeementType": "part-time",
+    "HoursPerWeek" : 40
+
+}

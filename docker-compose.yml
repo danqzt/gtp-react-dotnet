@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  ui:
+    image: react-ui
+    build: 
+      context: .
+      dockerfile: ui/Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+      
+  server:
+    image: dotnet-server
+    build: 
+      context: .
+      dockerfile: server/src/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+    ports:
+      - "5240:5240"
+  
