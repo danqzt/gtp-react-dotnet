@@ -37,7 +37,11 @@ namespace Server.Repositories
 
         public Employee Add(Employee employee)
         {
-            employee.Id = Context.Last().Id + 7;
+            employee.Id = 1;
+            if (Context.Count > 0)
+            {
+                employee.Id = Context.Last().Id + 7;
+            }
             employeeData.Add(employee);
             return employee;
         }
