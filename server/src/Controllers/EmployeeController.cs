@@ -62,7 +62,7 @@ public class EmployeesController : ControllerBase
     {
         try
         {
-            var employee = employeeService.AddAsync(model, cancellationToken);
+            var employee = await employeeService.AddAsync(model, cancellationToken);
             return Ok(employee);
         }
         catch (ValidationException vex)
@@ -80,12 +80,16 @@ public class EmployeesController : ControllerBase
     {
         try
         {
-            var employee = employeeService.UpdateAsync(model, cancellationToken);
+            var employee = await employeeService.UpdateAsync(model, cancellationToken);
             return Ok(employee);
         }
         catch (ValidationException vex)
         {
             return BadRequest("Model is invalid:" + vex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
         }
     }
 
