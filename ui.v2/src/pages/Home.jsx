@@ -1,68 +1,63 @@
-import React, { Fragment, Component } from 'react';
-import { Breadcrumbs, Button, Section, SkipTo } from 'nsw-ds-react';
-import { TopSection } from '../components/TopSection';
+import { Button, Section, SkipTo } from 'nsw-ds-react';
+import { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteEmployeeAction, fetchEmployeesAction } from '../state/EmployeeActions';
+import { Audio } from 'react-loader-spinner'
+import { Dialog } from '../components/Dialog';
+import { useState } from 'react';
 
 export const Home = () => {
+    const data = useSelector((state) => state.employee);
+    const [toDelete, setToDelete] = useState({firstName: '', lastName: ''});
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchEmployeesAction());
+    }, [])
+
+    useEffect(() => { 
+        window.NSW.initSite();
+    }, [data])
+    
+    const deleteRecord = () => {
+       dispatch(deleteEmployeeAction(toDelete.id));
+    }
+
+    const renderItems = () => {
+        return data.employees?.map(e => (
+            <Fragment key={e.id}>
+                <div className="nsw-grid" key={e.id}>
+                    <div className="nsw-col nsw-col-md-6">
+                        <div className='nsw-h4 text-padding'>{e.lastName}, {e.firstName}</div>
+                        <div className='body-text text-padding'>{Math.ceil(e.contractDuration / 12)} months</div>
+                        <div className='small-text'>{e.email}</div>
+                    </div>
+                    <div className="nsw-col nsw-col-md-6">
+                        <Button style='white'>Edit</Button> | <Button style='white' onClick={() => setToDelete(e)} className="js-open-dialog-rmEmployee">Remove</Button>
+                    </div>
+                </div>
+                <hr />
+            </Fragment>))
+    }
+
+
     return (
         <>
             <Section padding='half' container>
                 <div className='nsw-grid'>
                     <div className='nsw-col nsw-col-md-6'>
-                        <p class='nsw-intro'>Please click on 'Edit to find more detail of each employee</p>
+                        <p className='nsw-intro'>Please click on 'Edit to find more detail of each employee</p>
                     </div>
                     <div className='nsw-col nsw-col-md-6'>
                         <Button>Add Employee</Button>
                     </div>
                 </div>
-                <hr/>          
+                <hr />
             </Section>
             <Section padding='none' container>
-                <div class="nsw-grid">
-                    <div class="nsw-col nsw-col-md-6">
-                       <div class='nsw-h4 text-padding'>John Smith</div>
-                       <div class='body-text text-padding'>Contract - 2 years</div>
-                       <div class='small-text'>john@gmail.com</div>
-                    </div>
-                    <div class="nsw-col nsw-col-md-6">
-                        <Button style='white'>Edit</Button> | <Button style='white'>Remove</Button>
-                    </div>
-                </div>
-                <hr/>
-                <div class="nsw-grid">
-                    <div class="nsw-col nsw-col-md-6">
-                       <div class='nsw-h4 text-padding'>Luke Skywalker</div>
-                       <div class='nsw-text text-padding'>Contract - 2 years</div>
-                       <div class='small-text'>john@gmail.com</div>
-                    </div>
-                    <div class="nsw-col nsw-col-md-6">
-                        <Button style='white'>Edit</Button> | <Button style='white'>Remove</Button>
-                    </div>
-                </div>
-                <hr/> 
-                <div class="nsw-grid">
-                    <div class="nsw-col nsw-col-md-6">
-                       <div class='nsw-h4 text-padding'>John Smith</div>
-                       <div class='body-text text-padding'>Contract - 2 years</div>
-                       <div class='small-text'>john@gmail.com</div>
-                    </div>
-                    <div class="nsw-col nsw-col-md-6">
-                        <Button style='white'>Edit</Button> | <Button style='white'>Remove</Button>
-                    </div>
-                </div>
-                <hr/>
-                <div class="nsw-grid">
-                    <div class="nsw-col nsw-col-md-6">
-                       <div class='nsw-h4 text-padding'>Luke Skywalker</div>
-                       <div class='nsw-text text-padding'>Contract - 2 years</div>
-                       <div class='small-text'>john@gmail.com</div>
-                    </div>
-                    <div class="nsw-col nsw-col-md-6">
-                        <Button style='white'>Edit</Button> | <Button style='white'>Remove</Button>
-                    </div>
-                </div>
-                <hr/>  
+                { data.loading ? <Audio height='100' width='100' /> : renderItems()}
             </Section>
- 
+            <Dialog id="rmEmployee" title="Delete an employee record?" desc={`Are you sure to delete employee record ${toDelete.firstName} ${toDelete.lastName}`} action={deleteRecord}/>
 
         </>
     )
