@@ -6,7 +6,7 @@ export const fetchEmployeesAction = createAsyncThunk('employees/fetchAll', async
 })
 
 export const fetchEmployeeByIdAction = createAsyncThunk('employees/byId', async (id) => {
-   return id !== undefined ?  await fetchEmployeeById(id) : {};
+   return await fetchEmployeeById(id);
 })
 
 export const updateEmployeeAction = createAsyncThunk('employee/update', async (data) => {

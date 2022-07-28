@@ -8,7 +8,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^12.1.2",
     "nsw-design-system": "^3.2.2",
-    "nsw-ds-react": "^1.0.1",
+    "nsw-ds-react": "file:../../nsw-design-system-react",
     "prop-types": "^15.8.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
@@ -44,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

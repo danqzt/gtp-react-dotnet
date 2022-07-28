@@ -1,17 +1,21 @@
-import { Button, Section, SkipTo } from 'nsw-ds-react';
+import { Button, Section } from 'nsw-ds-react';
 import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { deleteEmployeeAction, fetchEmployeesAction } from '../state/EmployeeActions';
 import { Audio } from 'react-loader-spinner'
 import { Dialog } from '../components/Dialog';
 import { useState } from 'react';
 
 export const Home = () => {
+    const { setTitle } = useOutletContext();
     const data = useSelector((state) => state.employee);
     const [toDelete, setToDelete] = useState({firstName: '', lastName: ''});
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
+        setTitle("Employee List");
         dispatch(fetchEmployeesAction());
     }, [])
 
@@ -22,6 +26,11 @@ export const Home = () => {
     const deleteRecord = () => {
        dispatch(deleteEmployeeAction(toDelete.id));
     }
+
+    const openDetailPage = (id) =>{
+        let path = `/employees/${id}`
+        navigate(path);
+     }
 
     const renderItems = () => {
         return data.employees?.map(e => (
@@ -49,7 +58,7 @@ export const Home = () => {
                         <p className='nsw-intro'>Please click on 'Edit to find more detail of each employee</p>
                     </div>
                     <div className='nsw-col nsw-col-md-6'>
-                        <Button>Add Employee</Button>
+                        <Button onClick={() => openDetailPage("new")}>Add Employee</Button>
                     </div>
                 </div>
                 <hr />

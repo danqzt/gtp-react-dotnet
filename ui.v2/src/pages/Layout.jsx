@@ -1,20 +1,16 @@
 import { TopSection } from "../components/TopSection"
 import PropTypes from 'prop-types';
-import { Outlet, useLocation } from "react-router-dom";
-import { Footer, FooterLower, FooterSectionGroup, FooterUpper} from "nsw-ds-react";
+import { Outlet } from "react-router-dom";
+import { Footer, FooterLower, FooterSectionGroup, FooterUpper } from "nsw-ds-react";
+import { useState } from "react";
 
 export const Layout = () => {
-    const loc = useLocation();
-    let title = '';
-    if(loc.pathname === '/')
-       title = 'Employee list';
-    else if(loc.pathname.indexOf('/employees') > -1)
-       title = 'Employee detail';
 
+    const [title, setTitle] = useState('Employee List');
     return (
         <>
-            <TopSection title={title}/>
-              <Outlet/>
+            <TopSection title={title} />
+            <Outlet context={ { setTitle }}/>
             <Footer>
                 <FooterUpper>
                     <FooterSectionGroup heading={{

@@ -1,6 +1,6 @@
 import { Breadcrumbs, Button, Header, MainNav, Masthead, Section, SkipTo } from 'nsw-ds-react';
 
-export const TopSection = ({title}) => {
+export const TopSection = ({ title }) => {
     return (
         <>
             <SkipTo
@@ -11,7 +11,7 @@ export const TopSection = ({title}) => {
             <Header
                 headerUrl="#"
                 onSubmit={function noRefCheck() { }}
-                siteTitle={title}
+                siteTitle={ title }
             />
             <MainNav megaMenu navItems={[
                 {
