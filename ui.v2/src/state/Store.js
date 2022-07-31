@@ -2,7 +2,7 @@ import {combineReducers, configureStore, getDefaultMiddleware} from '@reduxjs/to
 import { employeeSlice } from './EmployeeReducer';
 import { persistReducer, persistStore } from 'redux-persist'
 import localStorage from 'redux-persist/es/storage';
-import { ApiSlice }from 'ApiSlice';
+import { ApiSlice }from './ApiSlice';
 
 const persistConfig = {
     key: 'root',

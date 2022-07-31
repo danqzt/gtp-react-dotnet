@@ -6,7 +6,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { persistor, store } from './state/Store';
 import { PersistGate } from 'redux-persist/integration/react';
+//import { EmployeeApiSlice } from './state/ApiSlice'
 
+//store.dispatch(EmployeeApiSlice.endpoints.getEmployees.initiate());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

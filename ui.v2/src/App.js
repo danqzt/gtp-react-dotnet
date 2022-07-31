@@ -4,15 +4,14 @@ import { Home } from './pages/Home';
 import { EmployeeDetail } from './pages/EmployeeDetail';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './pages/Layout';
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { TitleProvider } from './state/TitleProvider';
 import { ErrorBoundary } from './helpers/ErrorBoundary';
+import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
+import { ApiSlice } from './state/ApiSlice';
 
 function App() {
   return (
     <ErrorBoundary key="443432">
-      <TitleProvider>
+      <ApiProvider api={ApiSlice}>
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
@@ -21,7 +20,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </TitleProvider>
+      </ApiProvider>
     </ErrorBoundary>
   );
 }

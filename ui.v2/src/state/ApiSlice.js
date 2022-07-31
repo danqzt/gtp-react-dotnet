@@ -1,4 +1,3 @@
-import { createEntityAdapter } from '@reduxjs/toolkit';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 export const ApiSlice = createApi({
@@ -8,23 +7,23 @@ export const ApiSlice = createApi({
    endpoints: builder => ({})
 });
 
-const employeeAdapter = createEntityAdapter({
-   selectId: (emp) => emp.id,
-});
 
-const initialState = employeeAdapter.getInitialState();
-
-const EmployeeApiSlice = ApiSlice.injectEndpoints({
+export const EmployeeApiSlice = ApiSlice.injectEndpoints({
    endpoints: builder => ({
       getEmployees: builder.query({
          query : () => '/employees',
-         transformResponse: resp => employeeAdapter.setAll(initialState, resp),
-         providesTags: (result, error, args) => 
-           [{type: 'Employees', id: 'LIST'},
-           ...result.ids.map(id => {type: 'Employees', id})]
+         providesTags: [{type: "Employees", id: "LIST"}]
+      }),
+      deleteEmployee: builder.mutation({
+         query: ({id}) => ({
+            url: `/employees/${id}`,
+            method: 'DELETE',
+            body: { id }
+         }),
+         invalidatesTags: [{type: "Employees", id: "LIST"}]
       })
    })
 
 });
 
-export const { useGetEmployeesQuery } = ApiSlice
+export const { useGetEmployeesQuery, useDeleteEmployeeMutation } = EmployeeApiSlice
